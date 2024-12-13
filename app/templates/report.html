@@ -1,0 +1,145 @@
+{% extends './includes/base.html' %}
+
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Generate Report Page</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Generate Report</li>
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% include './includes/message.html' %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Transaction Table</h5>
+                            <p>Manage your transaction information.</p>
+                        </div>
+                        <button
+                            type="button"
+                            class="btn bg-custom"
+                            data-bs-toggle="modal"
+                            data-bs-target="#transaction"
+                        >Transaction Report</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>Contact</th>
+                                    <th>Gender</th>
+                                    <th>Barangay</th>
+                                    <th>Date Added</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in assistance %}
+                                <tr>
+                                    <td>{{ item.client.get_fullname }}</td>
+                                    <td>{{ item.client.contact_number }}</td>
+                                    <td>{{ item.client.gender }}</td>
+                                    <td>{{ item.client.barangay }}</td>
+                                    <td>{{ item.date_added }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="transaction" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Download Transaction Report</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="form-group mt-2">
+                                <label for="from" class="form-label">Barangay</label>
+                                <select name="barangay" id="barangay" class="form-control">
+                                    <option value="" selected>Select Barangay</option>
+                                    {% for item in barangay %}
+                                    <option value="{{ item.barangay }}">{{ item.barangay }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <label for="from" class="form-label">Assistance Type</label>
+                                <select name="assistance_type" id="assistance_type" class="form-control">
+                                    <option value="" selected>Select Assistance</option>
+                                    <option value="Burial">Burial</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Medical">Medical</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <label for="from" class="form-label">Client Type</label>
+                                <select name="type" id="type" class="form-control">
+                                    <option value="" selected>Select Client Type</option>
+                                    <option value="Solo Parent">Solo Parent</option>
+                                    <option value="PWD">PWD</option>
+                                    <option value="Senior Citizen">Senior Citizen</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="from" class="form-label">Start Date</label>
+                                <input
+                                    type="date"
+                                    name="from"
+                                    id="from"
+                                    class="form-control"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="to" class="form-label">End Date</label>
+                                <input
+                                    type="date"
+                                    name="to"
+                                    id="to"
+                                    class="form-control"
+                                    required
+                                >
+                            </div>
+                            <div class="form-group mt-3">
+                                <input
+                                    type="submit"
+                                    name="submit"
+                                    id="submit"
+                                    class="btn bg-custom"
+                                    value="Download Report"
+                                >
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

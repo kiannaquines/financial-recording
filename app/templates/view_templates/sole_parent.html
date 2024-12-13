@@ -1,0 +1,63 @@
+{% extends './../includes/base.html' %}
+
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Clients</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Sole Parent List</li>
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% include './../includes/message.html' %}
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Sole Parent Table</h5>
+                            <p>Manage your clients information.</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>Contact</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+                                    <th>Barangay</th>
+                                    <th>Client Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in clients %}
+                                <tr>
+                                    <td>{{ item.get_fullname }}</td>
+                                    <td>{{ item.contact_number }}</td>
+                                    <td>{{ item.gender }}</td>
+                                    <td>{{ item.birth_date }}</td>
+                                    <th>{{ item.barangay }}</th>
+                                    <th>
+                                        <div class="badge bg-primary">
+                                            {{ item.client_type }}
+                                        </div>
+                                    </th>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

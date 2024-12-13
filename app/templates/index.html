@@ -1,0 +1,527 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>MSWD</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link href="{% static 'landing_page/assets/img/favicon.png' %}" rel="icon">
+        <link href="{% static 'landing_page/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+        <link href="{% static 'landing_page/assets/css/main.css' %}" rel="stylesheet">
+        <style>
+            .search-container {
+                text-align: center;
+                width: 100%;
+                max-width: 900px;
+                padding: 20px;
+                border-radius: 8px;
+                margin: auto;
+            }
+            .search-container h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+                font-weight: 600;
+                color: #333;
+            }
+            .search-form-container {
+                position: relative;
+                width: 100%;
+            }
+            .search-bar {
+                display: flex;
+                align-items: center;
+                border: 1px solid #ddd;
+                border-radius: 50px;
+                overflow: hidden;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+                margin-bottom: 5px;
+            }
+            .search-bar input {
+                flex: 1;
+                padding: 10px 20px;
+                border: none;
+                outline: none;
+                font-size: 16px;
+            }
+            .search-bar input::placeholder {
+                font-family: 'Nunito';
+            }
+            .search-bar input:focus {
+                outline: none !important;
+                box-shadow: none !important;
+                border-color: inherit !important;
+            }
+            .search-bar button {
+                padding: 10px 20px;
+                background-color: #388DA8;
+                color: #fff;
+                border: none;
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 0 50px 50px 0;
+                transition: background-color 0.3s;
+                font-family: 'Nunito';
+            }
+            .search-bar button:hover {
+                background-color: #388DA8;
+            }
+            .search-bar i {
+                margin-left: 15px;
+                fill: #888;
+            }
+
+            .autocomplete-results {
+                width: 100%;
+                max-height: 300px;
+                overflow-y: auto;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                margin-top: 10px;
+                display: none;
+            }
+            .autocomplete-item {
+                padding: 12px 20px;
+                cursor: pointer;
+                text-align: left;
+                border-bottom: 1px solid #eee;
+                transition: background-color 0.2s;
+            }
+            .autocomplete-item:last-child {
+                border-bottom: none;
+            }
+            .autocomplete-item:hover {
+                background-color: #f5f5f5;
+            }
+            .autocomplete-item.active {
+                background-color: #f0f0f0;
+            }
+            /* Scrollbar styling */
+            .autocomplete-results::-webkit-scrollbar {
+                width: 8px;
+            }
+            .autocomplete-results::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 4px;
+            }
+            .autocomplete-results::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+            .autocomplete-results::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+            }
+
+            .modal-content {
+                position: relative;
+                background-color: #fff;
+                margin: 15% auto;
+                padding: 20px;
+                width: 90%;
+                max-width: 500px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .modal-title {
+                font-size: 20px;
+                font-weight: 600;
+                color: #333;
+                margin: 0;
+            }
+
+            .close-modal {
+                cursor: pointer;
+                font-size: 24px;
+                color: #666;
+                background: none;
+                border: none;
+                padding: 0;
+            }
+
+            .close-modal:hover {
+                color: #333;
+            }
+
+            .modal-body {
+                padding: 10px 0;
+            }
+
+            .client-info {
+                margin-bottom: 15px;
+            }
+
+            .info-label {
+                font-weight: 600;
+                color: #666;
+                margin-bottom: 5px;
+            }
+
+            .info-value {
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+            .modal-footer {
+                padding-top: 15px;
+                border-top: 1px solid #eee;
+                text-align: right;
+            }
+
+            .modal-footer button {
+                padding: 8px 16px;
+                background-color: #388DA8;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .modal-footer button:hover {
+                background-color: #388DA8;
+            }
+        </style>
+    </head>
+    <body class="index-page">
+        <header id="header" class="header d-flex align-items-center fixed-top">
+            <div class="container-fluid container-xl position-relative d-flex align-items-center">
+                <a href="index.html" class="logo d-flex align-items-center me-auto">
+                    <img src="{% static 'landing_page/assets/img/logo.png' %}" alt="">
+                    <h1 class="sitename">MSWD</h1>
+                </a>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li>
+                            <a href="#hero" class="active">Home</a>
+                        </li>
+                        <li>
+                            <a href="#search">Search Cash Assistance</a>
+                        </li>
+                        <li>
+                            <a href="#about">About</a>
+                        </li>
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+                <a class="btn-getstarted" href="/login">Login as Staff</a>
+            </div>
+        </header>
+        <main class="main">
+            <section id="hero" class="hero section">
+                <div class="hero-bg">
+                    <img src="{% static 'landing_page/assets/img/hero-bg-light.webp' %}" alt="">
+                </div>
+                <div class="container text-center">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <h1 data-aos="fade-up">Welcome to
+                            <span>MSWD</span>
+                        </h1>
+                        <p data-aos="fade-up" data-aos-delay="100">Be updated at the latest cash assistance using the web application.
+                            <br>
+                        </p>
+                        <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                            <a href="#search" class="btn-get-started">Get Started</a>
+                        </div>
+                        <img
+                            src="{% static 'landing_page/assets/img/hero-services-img.webp' %}"
+                            class="img-fluid hero-img"
+                            alt=""
+                            data-aos="zoom-out"
+                            data-aos-delay="300"
+                        >
+                    </div>
+                </div>
+            </section>
+            <section id="search" class="featured-services section light-background">
+                <div class="search-container">
+                    <h1>MSWD Cash Assistance Search Form</h1>
+                    <div class="search-form-container">
+                        <form method="GET" id="search-form">
+                            <div class="search-bar">
+                                <i class="bi bi-search"></i>
+                                <input
+                                    type="text"
+                                    id="search-input"
+                                    name="query"
+                                    class="form-control"
+                                    placeholder="Search your name here..."
+                                    autocomplete="off"
+                                    required
+                                >
+                                <button type="button" id="view-info-btn" disabled>View Info</button>
+                            </div>
+                        </form>
+                        <div id="autocomplete-results" class="autocomplete-results"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="features-details" class="features-details section">
+                <div class="container">
+                    <div class="row gy-4 justify-content-between features-item">
+                        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                            <img src="{% static 'landing_page/assets/img/features-1.jpg' %}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-5 d-flex align-items-center" data-aos="fade-up" data-aos-delay="200">
+                            <div class="content">
+                                <h3>About Us</h3>
+                                <p>
+                                    THE DSWD AICS program provides financial assistance to individuals and families who are facing a crisis situation due to an emergency or natural disaster. Under the AICS are programs for Education cash assistance, Medical cash assistance and Burial cash assistance.
+
+                                </p>
+                                <a href="#" class="btn more-btn">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="contact" class="contact section">
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Contact</h2>
+                    <p>All contact informations are provided below</p>
+                </div>
+                <div class="container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row gy-4">
+                        <div class="col-lg-6">
+                            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bi bi-geo-alt"></i>
+                                <h3>Address</h3>
+                                <p>Carmen, North Cotabato Municipal Hall</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300">
+                                <i class="bi bi-telephone"></i>
+                                <h3>Call Us</h3>
+                                <p>+63 99668059918</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
+                                <i class="bi bi-envelope"></i>
+                                <h3>Email Us</h3>
+                                <p>mswdcarmen@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="info-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Client Information</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="client-info">
+                        <div class="info-label">Client Name:</div>
+                        <div id="modal-client-name" class="info-value"></div>
+
+                        <div class="info-label">Assistance Type:</div>
+                        <div id="modal-assistance-type" class="info-value"></div>
+
+                        <div class="info-label">Claimed:</div>
+                        <div id="modal-claimed" class="info-value badge bg-primary text-white" style="background-color: #388DA8 !important;"></div>
+
+                        <div class="info-label">Notified:</div>
+                        <div id="modal-notified" class="info-value badge bg-primary text-white" style="background-color: #388DA8 !important;"></div>
+
+                        <div class="info-label">Ready:</div>
+                        <div id="modal-ready" class="info-value badge bg-primary text-white" style="background-color: #388DA8 !important;"></div>
+
+                        <div class="info-label">Date Provided:</div>
+                        <div id="modal-provided" class="info-value"></div>
+
+                        <div class="info-label">Date Requested:</div>
+                        <div id="modal-addded" class="info-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+        <div id="preloader"></div>
+        <script src="{% static 'landing_page/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'landing_page/assets/vendor/php-email-form/validate.js' %}"></script>
+        <script src="{% static 'landing_page/assets/vendor/aos/aos.js' %}"></script>
+        <script src="{% static 'landing_page/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+        <script src="{% static 'landing_page/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+        <script src="{% static 'landing_page/assets/js/main.js' %}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById('search-input');
+                const resultsContainer = document.getElementById('autocomplete-results');
+                const searchForm = document.getElementById('search-form');
+                const viewInfoBtn = document.getElementById('view-info-btn');
+                const modal = document.getElementById('info-modal');
+                let selectedResult = null;
+
+                function showModal() {
+                    if (selectedResult) {
+                        document.getElementById('modal-client-name').textContent = selectedResult.client_name;
+                        document.getElementById('modal-assistance-type').textContent = selectedResult.assistance_type;
+                        
+                        document.getElementById('modal-claimed').textContent = selectedResult.is_claimed ? "Claimed" : "Not Claimed";
+                        document.getElementById('modal-notified').textContent = selectedResult.is_notified ? "Notified" : "Not Notified";
+                        document.getElementById('modal-ready').textContent = selectedResult.is_ready ? "Cash Assistance Ready" : "Pending";
+
+                        document.getElementById('modal-provided').textContent = selectedResult.date_provided ? selectedResult.date_provided : "NA";
+                        document.getElementById('modal-addded').textContent = selectedResult.date_added;
+                        modal.style.display = 'block';
+                    }
+                }
+
+                function closeModal() {
+                    modal.style.display = 'none';
+                }
+
+                document.querySelectorAll('.close-modal').forEach(button => {
+                    button.addEventListener('click', closeModal);
+                });
+
+                window.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                viewInfoBtn.addEventListener('click', showModal);
+
+                function debounce(func, wait) {
+                    let timeout;
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func(...args);
+                        };
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                    };
+                }
+
+                const handleInput = debounce(async function(query) {
+                    if (!query.trim()) {
+                        resultsContainer.style.display = 'none';
+                        viewInfoBtn.disabled = true;
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(`/autocomplete/?query=${encodeURIComponent(query)}`);
+                        const data = await response.json();
+
+                        resultsContainer.innerHTML = '';
+                        
+                        if (data.results && data.results.length > 0) {
+                            data.results.forEach((result, index) => {
+                                const item = document.createElement('div');
+                                item.className = 'autocomplete-item';
+                                item.textContent = `${result.client_name} - ${result.assistance_type}`;
+                                
+                                item.addEventListener('click', function() {
+                                    searchInput.value = result.client_name;
+                                    selectedResult = result;
+                                    resultsContainer.style.display = 'none';
+                                    viewInfoBtn.disabled = false;
+                                });
+
+                                resultsContainer.appendChild(item);
+                            });
+                            resultsContainer.style.display = 'block';
+                        } else {
+
+                            const item = document.createElement('div');
+                            item.className = 'autocomplete-item';
+                            item.textContent = `No search results found`;
+
+                            resultsContainer.appendChild(item);
+                            resultsContainer.style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('Error fetching autocomplete results:', error);
+                        resultsContainer.style.display = 'none';
+                    }
+                }, 300);
+
+                searchInput.addEventListener('input', function() {
+                    handleInput(this.value);
+                    viewInfoBtn.disabled = true;
+                });
+
+                searchInput.addEventListener('keydown', function(e) {
+                    const items = resultsContainer.getElementsByClassName('autocomplete-item');
+                    const activeItem = resultsContainer.querySelector('.autocomplete-item.active');
+                    
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        
+                        if (!items.length) return;
+                        
+                        let nextActive;
+                        if (!activeItem) {
+                            nextActive = e.key === 'ArrowDown' ? items[0] : items[items.length - 1];
+                        } else {
+                            const currentIndex = Array.from(items).indexOf(activeItem);
+                            activeItem.classList.remove('active');
+                            
+                            if (e.key === 'ArrowDown') {
+                                nextActive = items[currentIndex + 1] || items[0];
+                            } else {
+                                nextActive = items[currentIndex - 1] || items[items.length - 1];
+                            }
+                        }
+                        
+                        if (nextActive) {
+                            Array.from(items).forEach(item => item.classList.remove('active'));
+                            nextActive.classList.add('active');
+                            nextActive.scrollIntoView({ block: 'nearest' });
+                            searchInput.value = nextActive.textContent.split(' - ')[0];
+                        }
+                    } else if (e.key === 'Enter' && activeItem) {
+                        e.preventDefault();
+                        searchInput.value = activeItem.textContent.split(' - ')[0];
+                        resultsContainer.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

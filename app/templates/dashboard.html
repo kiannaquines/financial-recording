@@ -1,0 +1,251 @@
+{% extends './includes/base.html' %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>MSWD Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+        </ol>
+    </nav>
+</div>
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card sales-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Beneficiary
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ beneficiary_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ beneficiary_count }} beneficiary.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card revenue-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Clients
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ client_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ client_count }} clients.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Assistance
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-grid-1x2"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ assistance_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ assistance_count }} request.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                PWD
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ pwd_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ pwd_count }} pwd.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Senior
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ senior_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ senior_count }} senior.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-4 col-md-4">
+                    <div class="card info-card customers-card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Sole Parent
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>{{ sole_parent_count }}</h6>
+                                    <span class="text-muted small pt-2 ps-1">There are {{ sole_parent_count }} sole parent.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Cash Assistance Type Chart</h5>
+          
+                        <div id="columnChart"></div>
+          
+                        <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                              const chartData = {{ chart_data|safe }};
+                              const months = {{ months|safe }};
+                          
+                              new ApexCharts(document.querySelector("#columnChart"), {
+                                series: [
+                                  {
+                                    name: "Education",
+                                    data: chartData.Education,
+                                  },
+                                  {
+                                    name: "Medical",
+                                    data: chartData.Medical,
+                                  },
+                                  {
+                                    name: "Burial",
+                                    data: chartData.Burial,
+                                  },
+                                ],
+                                chart: {
+                                  type: "bar",
+                                  height: 350,
+                                },
+                                plotOptions: {
+                                  bar: {
+                                    horizontal: false,
+                                    columnWidth: "55%",
+                                    endingShape: "rounded",
+                                  },
+                                },
+                                dataLabels: {
+                                  enabled: false,
+                                },
+                                stroke: {
+                                  show: true,
+                                  width: 2,
+                                  colors: ["transparent"],
+                                },
+                                xaxis: {
+                                  categories: months,
+                                },
+                                yaxis: {
+                                  title: {
+                                    text: "Count",
+                                  },
+                                },
+                                fill: {
+                                  opacity: 1,
+                                },
+                                tooltip: {
+                                  y: {
+                                    formatter: function (val) {
+                                      return val + " assistance(s)";
+                                    },
+                                  },
+                                },
+                              }).render();
+                            });
+                          </script>
+                                   
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Transaction History
+                            </h5>
+                            <div id="table-responsive">
+                                <table class="table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Fullname</th>
+                                            <th>Contact</th>
+                                            <th>Notified</th>
+                                            <th>Claimed</th>
+                                            <th>Assistance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in assistance %}
+                                        <tr>
+                                            <td>{{ item.client.get_fullname }}</td>
+                                            <td>{{ item.client.contact_number }}</td>
+                                            <td>
+                                                <div class="badge bg-{{ item.is_notified|yesno:'primary,warning' }}">{{ item.is_notified|yesno:"Yes,No" }}</div>
+                                            </td>
+                                            <td>
+                                                <div class="badge bg-{{ item.is_claimed|yesno:'primary,warning' }}">{{ item.is_claimed|yesno:"Yes,No" }}</div>
+                                            </td>
+                                            <td>
+                                                <div class="badge bg-primary">
+                                                    {{ item.assistance_type }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

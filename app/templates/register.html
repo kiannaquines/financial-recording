@@ -1,0 +1,46 @@
+{% extends './includes/auth_base.html' %}
+
+{% block auth_content %}
+<div class="card-body mt-2">
+    <div class="pt-4 pb-2">
+        <h5 class="card-title text-center pb-0 fs-4">Register to your Account</h5>
+        <p class="text-center small">Enter your username & password to login</p>
+    </div>
+    <form class="row g-3 needs-validation" method="POST" novalidate>
+        {% csrf_token %}
+        {% for input in form %}
+        <div class="col-12">
+            <label for="yourUsername" class="form-label">{{ input.label }}</label>
+            <div class="input-group has-validation">
+                {% if input.id_for_label == 'id_username' %}
+                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                {% endif %}
+                {{ input }}
+                <div class="invalid-feedback">Please enter valid details.</div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="col-12">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="remember"
+                    value="true"
+                    id="rememberMe"
+                    checked
+                >
+                <label class="form-check-label" for="rememberMe">Remember me</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn bg-custom w-100" type="submit">Register</button>
+        </div>
+        <div class="col-12">
+            <p class="small mb-0">Don't have account?
+                <a href="{% url 'login' %}">Create an account</a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}

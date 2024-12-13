@@ -1,0 +1,150 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'dashboard' %}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                data-bs-target="#assistance"
+                data-bs-toggle="collapse"
+                href="#"
+            >
+                <i class="bi bi-layout-text-window-reverse"></i>
+                <span>Transaction</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="assistance" class="nav-content collapse {% if 'assistance' in request.path %}show{% endif %}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'add_assistance' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Transaction</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'history' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Transaction History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'assistance' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Manage Transaction</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                data-bs-target="#charts-client"
+                data-bs-toggle="collapse"
+                href="#"
+            >
+                <i class="bi bi-people"></i>
+                <span>Client</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="charts-client" class="nav-content collapse {% if 'client' in request.path %}show{% endif %}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'add_client' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Client</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'client' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Manage Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'senior_list' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Senior Citizen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'sole_parent' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Family Solo Parent</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'pwd_list' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>PWD List</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                data-bs-target="#users"
+                data-bs-toggle="collapse"
+                href="#"
+            >
+                <i class="bi bi-people"></i>
+                <span>Users</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="users" class="nav-content collapse {% if 'users' in request.path %}show{% endif %}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'add_user' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'users' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Manage Users</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a
+                class="nav-link collapsed"
+                data-bs-target="#charts-nav"
+                data-bs-toggle="collapse"
+                href="#"
+            >
+                <i class="bi bi-people"></i>
+                <span>Beneficiary</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="charts-nav" class="nav-content collapse {% if 'beneficiary' in request.path %}show{% endif %}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{% url 'add_beneficiary' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Add Beneficiary</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'beneficiary' %}">
+                        <i class="bi bi-circle"></i>
+                        <span>Manage Beneficiary</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'report' %}">
+                <i class="bi bi-file-earmark-break"></i>
+                <span>Generate Report</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'notications' %}">
+                <i class="bi bi-person"></i>
+                <span>Notification Settings</span>
+            </a>
+        </li>
+    </ul>
+</aside>

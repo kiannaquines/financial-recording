@@ -1,0 +1,54 @@
+{% extends './../includes/base.html' %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Add Notification Template</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Add New Notification</li>
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% include './../includes/message.html' %}
+            <div class="card">
+                <div class="card-body p-4">
+                    <h5>Add Notification Information</h5>
+                    <p>Please provide the notification details</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% for input in form %}
+                           
+                            {% if input.id_for_label == 'id_is_primary_notification' %}
+                            <div class="form-check mt-3">
+                                <label for="{{ input.id_for_label }}" class="form-check-label">
+                                    {{ input.label }}
+                                </label>
+                                {{ input }}
+                            </div>
+                            {% else %}
+                                <label for="{{ input.id_for_label }}" class="form-label mt-2">
+                                    {{ input.label }}
+                                </label>
+                                {{ input }}
+                            {% endif %}
+
+                    {% endfor %}
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="submit" value="Add Notification Template" class="btn bg-custom btn-md">
+                            <input type="button" value="Back" onclick="goBack()" class="btn btn-primary btn-md">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends './../includes/base.html' %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Remove Client</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Remove Client</li>
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            {% include './../includes/message.html' %}
+            <div class="card">
+                <div class="card-body p-4">
+                    <h5>Are you sure you want to remove <b>{{ object }}</b>?</h5>
+                    <div class="alert alert-danger">
+                        This action cannot be undone after removing the {{ object }} data.
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group mt-3">
+                            <input type="submit" value="Remove Client" class="btn btn-danger btn-md">
+                            <input type="button" onclick="goBack()" value="Back" class="btn bg-custom btn-md">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
