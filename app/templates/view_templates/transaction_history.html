@@ -34,6 +34,7 @@
                                     <th>Notified</th>
                                     <th>Claimed</th>
                                     <th>Assistance</th>
+                                    <th>Representative</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,9 @@
                                         <div class="badge bg-primary">
                                             {{ item.assistance_type }}
                                         </div>
+                                    </td>
+                                    <td>
+                                        {{ item.client.who_will_claim }}
                                     </td>
                                 </tr>
                                 {% endfor %}

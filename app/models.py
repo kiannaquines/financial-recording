@@ -60,7 +60,7 @@ class Client(models.Model):
     address = models.TextField(max_length=255, null=False)
     client_type = models.CharField(max_length=50, choices=CLIENT_TYPE)
     date_added = models.DateTimeField(auto_now_add=True)
-
+    who_will_claim = models.CharField(max_length=255, null=True, blank=True)
     def get_age(self):
         today = datetime.now().date()
         return (
@@ -92,6 +92,18 @@ class Beneficiary(models.Model):
         ('Son','Son'),
         ('Daughter','Daughter'),
         ('Grand parent', 'Grand parent'),
+        ('Brother', 'Brother'),
+        ('Sister', 'Sister'),
+        ('Grand child', 'Grand child'),
+        ('Aunt', 'Aunt'),
+        ('Uncle', 'Uncle'),
+        ('Niece', 'Niece'),
+        ('Nephew', 'Nephew'),
+        ('First Cousin', 'First Cousin'),
+        ('Cousin', 'Cousin'),
+        ('Relative', 'Relative'),
+        ('Spouse', 'Spouse'),
+        ('Child', 'Child'),
     )
 
     client_id = models.ForeignKey(

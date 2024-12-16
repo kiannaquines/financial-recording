@@ -378,7 +378,11 @@ class AssistanceHistoryView(View):
     def get(self, request):
         context = {}
         query_assistance = (
-            Assistance.objects.all().select_related("client").order_by("-date_added")
+            Assistance.objects.all()
+            .select_related("client")
+            .prefetch_related(
+                "client__beneficiary_set"
+            ).order_by("-date_added")
         )
         context["assistance"] = query_assistance
         return render(request, self.template_name, context)
